@@ -63,7 +63,3 @@ src/
 ## Customization
 
 All personal data (name, links, experience, projects, skills, achievements) lives in `src/data/portfolio.ts`. Edit that file to update the content without touching any component logic.
-
-## Deployment
-
-The site auto-deploys to GitHub Pages via GitHub Actions on every push to `main`. Go to **Settings → Pages → Source** and set it to **GitHub Actions**.

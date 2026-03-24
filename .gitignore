@@ -32,7 +32,7 @@ Thumbs.db
 vite.config.ts.timestamp-*
 
 # Data / PDFs (personal resume files)
-Data/
+/Data/
 
 # Claude Code
 .claude/
