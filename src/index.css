@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ─────────────────────────── */
+:root {
+  --color-bg: #030303;
+  --color-surface: #0e0e0e;
+  --color-surface-2: #161616;
+  --color-primary: #34d399;    /* emerald */
+  --color-secondary: #fbbf24;  /* amber */
+  --color-tertiary: #38bdf8;   /* sky */
+  --color-text: #f0f0f0;
+  --color-text-dim: #6b7280;
+  --color-border: rgba(52, 211, 153, 0.1);
+}
+
+/* ── Base ──────────────────────────────────────────── */
+html { scroll-behavior: smooth; background: #030303; }
+
+body {
+  background: #030303;
+  color: #f0f0f0;
+  font-family: 'Inter', 'Montserrat', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #030303; }
+::-webkit-scrollbar-thumb { background: #34d399; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #6ee7b7; }
+
+/* ── Selection ─────────────────────────────────────── */
+::selection { background: rgba(52, 211, 153, 0.25); color: white; }
+
+/* ── Animated gradient text (emerald → amber → sky) ── */
+.animate-gradient-text {
+  background: linear-gradient(to right, #34d399, #fbbf24, #38bdf8, #34d399);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 12s linear infinite;
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Section label pill ────────────────────────────── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #34d399;
+  padding: 5px 14px;
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: 100px;
+  background: rgba(52, 211, 153, 0.06);
+}
+
+/* ── Glass card ────────────────────────────────────── */
+.glass-card {
+  background: rgba(14, 14, 14, 0.85);
+  border: 1px solid rgba(52, 211, 153, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── Skill tag ─────────────────────────────────────── */
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  border: 1px solid rgba(52, 211, 153, 0.15);
+  background: rgba(52, 211, 153, 0.04);
+  color: #6ee7b7;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+.skill-tag:hover {
+  border-color: rgba(52, 211, 153, 0.4);
+  background: rgba(52, 211, 153, 0.1);
+  color: #a7f3d0;
+  transform: translateY(-1px);
+}
+
+/* ── Gradient border ───────────────────────────────── */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #34d399, #fbbf24, #38bdf8);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Glow effects ──────────────────────────────────── */
+.glow-green { box-shadow: 0 0 40px rgba(52, 211, 153, 0.15), 0 0 80px rgba(52, 211, 153, 0.05); }
+.glow-amber { box-shadow: 0 0 40px rgba(251, 191, 36, 0.15), 0 0 80px rgba(251, 191, 36, 0.05); }
+.text-glow-green { text-shadow: 0 0 30px rgba(52, 211, 153, 0.5); }
+
+/* ── Cursor glow ───────────────────────────────────── */
+.cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.04) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  transition: left 0.1s ease, top 0.1s ease;
+}
+
+/* ── Grid background ───────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(52, 211, 153, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 211, 153, 0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── Scanline effect ───────────────────────────────── */
+.scanline::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(52, 211, 153, 0.3), transparent);
+  animation: scan 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes scan {
+  0%   { top: 0%; }
+  100% { top: 100%; }
+}
+
+/* ── Form inputs ───────────────────────────────────── */
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-family: 'Outfit', sans-serif;
+  color: #f0f0f0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.form-input::placeholder { color: rgba(255, 255, 255, 0.25); }
+.form-input:focus {
+  border-color: rgba(52, 211, 153, 0.5);
+  background: rgba(52, 211, 153, 0.04);
+}
+.form-input option { background: #0e0e0e; color: #f0f0f0; }
+
+/* ── GSAP track ────────────────────────────────────── */
+.exp-track { will-change: transform; }
+
+/* ── Beam rotate ───────────────────────────────────── */
+@keyframes beam-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
