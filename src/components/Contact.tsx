@@ -59,7 +59,7 @@ export function Contact() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          {/* LEFT — connect info */}
+          {/* LEFT - connect info */}
           <BlurFade inView delay={0.2} className="lg:col-span-2">
             <div className="space-y-5">
               <div>
@@ -101,7 +101,7 @@ export function Contact() {
             </div>
           </BlurFade>
 
-          {/* RIGHT — form */}
+          {/* RIGHT - form */}
           <BlurFade inView delay={0.25} className="lg:col-span-3">
             <div
               className="rounded-2xl p-7 md:p-8 relative overflow-hidden"

@@ -103,7 +103,7 @@ export function Skills() {
             <div>
               <div className="text-sm text-white/40 font-mono mb-1">Education · 2021–2025</div>
               <div className="font-bold text-white text-base">
-                Indian Institute of Information Technology — Design and Manufacturing, Kancheepuram
+                Indian Institute of Information Technology - Design and Manufacturing, Kancheepuram
               </div>
               <div className="text-white/50 text-sm mt-0.5">
                 B.Tech in Computer Science Engineering ·{' '}

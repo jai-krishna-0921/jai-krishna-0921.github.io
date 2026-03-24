@@ -149,7 +149,7 @@ export function Hero() {
 
         {/* Subtitle */}
         <p className="hero-sub text-white/50 text-base sm:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-          {PERSONAL.subtitle} — from multi-agent LLM pipelines to production cloud deployments.
+          {PERSONAL.subtitle} - from multi-agent LLM pipelines to production cloud deployments.
         </p>
 
         {/* CTAs */}

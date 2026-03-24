@@ -1,25 +1,25 @@
-# Jai Krishna K — Portfolio
+# Jai Krishna K - Portfolio
 
 Personal portfolio website for Jai Krishna K, AI Engineer & Full-Stack Developer.
 
 ## Tech Stack
 
-- **Framework** — React 18 + TypeScript + Vite
-- **Styling** — Tailwind CSS v3
-- **Animations** — Framer Motion (motion/react) + GSAP ScrollTrigger
-- **Fonts** — Montserrat (display) · Inter (body) · JetBrains Mono (code)
-- **UI Components** — MagicUI (BlurFade, BorderBeam, NumberTicker, Particles)
-- **Icons** — Lucide React
+- **Framework** - React 18 + TypeScript + Vite
+- **Styling** - Tailwind CSS v3
+- **Animations** - Framer Motion (motion/react) + GSAP ScrollTrigger
+- **Fonts** - Montserrat (display) · Inter (body) · JetBrains Mono (code)
+- **UI Components** - MagicUI (BlurFade, BorderBeam, NumberTicker, Particles)
+- **Icons** - Lucide React
 
 ## Sections
 
-- **Hero** — Parallax particles, typewriter role animation, GSAP entrance
-- **About** — Sticky scroll with three animated narrative blocks
-- **Experience** — Horizontal scroll gallery driven by GSAP ScrollTrigger
-- **Projects** — Bento grid with click-to-expand modal popover
-- **Skills** — Animated category cards with skill tags
-- **Achievements** — Animated number stats + achievement cards
-- **Contact** — Two-column layout with mailto form
+- **Hero** - Parallax particles, typewriter role animation, GSAP entrance
+- **About** - Sticky scroll with three animated narrative blocks
+- **Experience** - Horizontal scroll gallery driven by GSAP ScrollTrigger
+- **Projects** - Bento grid with click-to-expand modal popover
+- **Skills** - Animated category cards with skill tags
+- **Achievements** - Animated number stats + achievement cards
+- **Contact** - Two-column layout with mailto form
 
 ## Getting Started
 
@@ -52,7 +52,7 @@ src/
 │   ├── Achievements.tsx
 │   └── Contact.tsx
 ├── data/
-│   └── portfolio.ts     # All content — edit this to update the site
+│   └── portfolio.ts     # All content - edit this to update the site
 ├── lib/
 │   └── utils.ts
 ├── App.tsx

@@ -27,7 +27,7 @@ export function Experience() {
       const section = sectionRef.current
       if (!track || !section) return
 
-      // Slide track based on section scroll — no GSAP pin, use CSS sticky
+      // Slide track based on section scroll - no GSAP pin, use CSS sticky
       gsap.to(track, {
         x: () => -(track.scrollWidth - window.innerWidth + 80),
         ease: 'none',
@@ -52,7 +52,7 @@ export function Experience() {
       style={{ height: `${EXPERIENCE.length * 65 + 60}vh` }}
       className="relative"
     >
-      {/* Sticky container — fills one viewport, clips overflow */}
+      {/* Sticky container - fills one viewport, clips overflow */}
       <div
         ref={stickyRef}
         className="sticky top-0 h-screen overflow-hidden bg-[#050810] flex flex-col"
@@ -127,7 +127,7 @@ function ExperienceCard({
       transition={{ delay: index * 0.1, duration: 0.5 }}
       whileHover={{ borderColor: `${exp.color}45`, y: -4 }}
     >
-      {/* Visual header — gradient + icon */}
+      {/* Visual header - gradient + icon */}
       <div
         className="h-36 relative flex items-end p-5 overflow-hidden"
         style={{ background: `linear-gradient(135deg, ${exp.color}25 0%, ${exp.color}08 50%, #0d1117 100%)` }}
@@ -195,7 +195,7 @@ function ExperienceCard({
           <div className="text-xs text-white/30 mt-0.5">{metric.sub}</div>
         </div>
 
-        {/* Tech tags — compact */}
+        {/* Tech tags - compact */}
         <div className="flex flex-wrap gap-1.5">
           {exp.tech.slice(0, 4).map((t) => (
             <span

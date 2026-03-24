@@ -56,7 +56,7 @@ export function Projects() {
           </BlurFade>
           <BlurFade inView delay={0.15}>
             <p className="text-white/40 mt-3 text-base max-w-lg">
-              From production AI platforms to research prototypes — shipped with intent.
+              From production AI platforms to research prototypes - shipped with intent.
             </p>
           </BlurFade>
         </div>

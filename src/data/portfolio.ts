@@ -20,9 +20,9 @@ export const EXPERIENCE = [
     type: 'Full-time',
     color: '#34d399',
     highlights: [
-      'Engineered multi-agent orchestration systems with custom MCP tools — improved RCA workflows by 40%',
-      'Delivered production hyper-automation platform (Next.js, PostgreSQL, JWT RBAC, Gemini Live Voice) on AWS via Pulumi within 2 weeks — 50% efficiency gain',
-      'Created Testcase Generation Agent with Mastra & LangChain — reduced QA time from 45 min → under 3 minutes, 65% coverage increase',
+      'Engineered multi-agent orchestration systems with custom MCP tools - improved RCA workflows by 40%',
+      'Delivered production hyper-automation platform (Next.js, PostgreSQL, JWT RBAC, Gemini Live Voice) on AWS via Pulumi within 2 weeks - 50% efficiency gain',
+      'Created Testcase Generation Agent with Mastra & LangChain - reduced QA time from 45 min → under 3 minutes, 65% coverage increase',
     ],
     tech: ['LangChain', 'Mastra', 'Next.js', 'PostgreSQL', 'AWS', 'Pulumi', 'Gemini APIs'],
   },
@@ -35,8 +35,8 @@ export const EXPERIENCE = [
     type: 'Internship',
     color: '#fbbf24',
     highlights: [
-      'Implemented dynamic scroll functionality for DOM traversal — expanded viewport test coverage by 60%+',
-      'Enhanced distributed agent orchestration via Redis Pub/Sub — improved reliability for large-scale automation',
+      'Implemented dynamic scroll functionality for DOM traversal - expanded viewport test coverage by 60%+',
+      'Enhanced distributed agent orchestration via Redis Pub/Sub - improved reliability for large-scale automation',
       'Cross-stack integration with Ruby on Rails, JavaScript, TypeScript for AI-augmented web systems',
     ],
     tech: ['Redis Pub/Sub', 'Ruby on Rails', 'TypeScript', 'JavaScript', 'AI Automation'],
@@ -50,8 +50,8 @@ export const EXPERIENCE = [
     type: 'Internship',
     color: '#38bdf8',
     highlights: [
-      'Built multi-agent systems to auto-generate user stories, technical requirements, and UAT scripts — 35% productivity boost',
-      'Implemented intelligent Support Bot for automated RCA on 1.9K+ tickets/month — reduced triage time by 40%',
+      'Built multi-agent systems to auto-generate user stories, technical requirements, and UAT scripts - 35% productivity boost',
+      'Implemented intelligent Support Bot for automated RCA on 1.9K+ tickets/month - reduced triage time by 40%',
     ],
     tech: ['Multi-Agent Systems', 'LLMs', 'LangChain', 'NLP', 'Automation'],
   },
@@ -114,7 +114,7 @@ export const PROJECTS = [
   {
     id: 4,
     image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80&auto=format&fit=crop',
-    title: 'Sudoku Solver — CNN + CV',
+    title: 'Sudoku Solver - CNN + CV',
     year: '2024',
     description: 'End-to-end computer vision pipeline using OpenCV for grid extraction. Trained CNN achieving 93.46% digit recognition accuracy on 10K augmented images.',
     tech: ['OpenCV', 'TensorFlow', 'PyTorch', 'CNN', 'Image Processing'],
@@ -189,7 +189,7 @@ export const ACHIEVEMENTS = [
   },
   {
     id: 2,
-    title: 'Top 5% — Responsible & Safe AI',
+    title: 'Top 5% - Responsible & Safe AI',
     org: 'NPTEL · 2023',
     description: 'Ranked among top national performers in ethical AI certification led by Dr. P. Kumaraguru.',
     icon: '🎖️',
