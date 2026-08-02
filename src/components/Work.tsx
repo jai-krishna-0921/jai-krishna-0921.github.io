@@ -79,48 +79,70 @@ function StackCard({
   progress: MotionValue<number>
   onOpen: () => void
 }) {
-  // Each card owns a slice of the shared timeline. It holds full size until
-  // the next card starts arriving, then falls away beneath it.
+  // Each slot is 190vh tall but pins only its first screenful, so the card
+  // sits still and crisp for ~90vh before the next one starts rising over
+  // it. DWELL is the fraction of the slice spent held, matching that ratio.
+  const DWELL = 0.47
   const start = index / total
   const end = (index + 1) / total
+  const held = start + (end - start) * DWELL
   const floor = 0.74 - (total - index - 1) * 0.012
 
-  const scale = useTransform(progress, [start, end], [1, floor])
-  const opacity = useTransform(progress, [start, end - 0.02, end], [1, 0.55, 0.22])
-  const blurN = useTransform(progress, [start, end], [0, 7])
-  const filter = useTransform(blurN, (b) => `blur(${b.toFixed(2)}px)`)
-  const y = useTransform(progress, [start, end], [0, -70])
+  // Held perfectly still, then falls away beneath the incoming card.
+  const scale = useTransform(progress, [start, held, end], [1, 1, floor])
+  const opacity = useTransform(progress, [start, held, end], [1, 1, 0.18])
+  const blurN = useTransform(progress, [start, held, end], [0, 0, 4.5])
+  const filter = useTransform(blurN, (b) => (b < 0.05 ? 'none' : `blur(${b.toFixed(2)}px)`))
+  const y = useTransform(progress, [start, held, end], [0, 0, -60])
 
   const Mock = MOCKUPS[KEY[project.id]]
   const flip = index % 2 === 1
 
   return (
-    <div className="h-screen sticky top-0 flex items-center px-6 md:px-10" style={{ zIndex: index + 1 }}>
-      {/* Opaque backdrop so a stacked card fully occludes the one beneath it */}
-      <motion.div style={{ opacity }} className="absolute inset-0 bg-ink" />
-      <div className="relative w-full">
+    <div className="sticky top-0 h-[190vh]" style={{ zIndex: index + 1 }}>
+      <div className="h-screen flex items-center px-6 md:px-10 relative">
+        {/* Opaque backdrop so a stacked card fully occludes the one beneath it */}
+        <motion.div style={{ opacity }} className="absolute inset-0 bg-ink" />
         <motion.div
           style={{ scale, opacity, filter, y }}
-          className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center origin-center"
+          className="relative max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center origin-center"
         >
-          {/* Media — slides in from the side it sits on */}
-          <SlideIn
-            from={flip ? 'right' : 'left'}
-            distance={80}
-            className={`col-span-1 lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}
-          >
-            <button
+          {/* Media — wipes open from the centre and blooms as the card settles */}
+          <div className={`col-span-1 lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>
+            <motion.button
               onClick={onOpen}
+              initial={{ clipPath: 'inset(42% 0% 42% 0% round 24px)', opacity: 0 }}
+              whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 24px)', opacity: 1 }}
+              viewport={{ once: true, margin: '-120px' }}
+              transition={{ duration: 1.15, ease: [0.16, 1, 0.3, 1] }}
               className="media group relative block w-full aspect-[16/10] cursor-pointer border border-[color:var(--hairline)]"
             >
-              <div className="absolute inset-0 p-4 sm:p-7">{Mock && <Mock />}</div>
+              {/* Ambient bloom behind the mockup */}
+              <motion.div
+                aria-hidden="true"
+                className="absolute -inset-16 pointer-events-none"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: '-120px' }}
+                transition={{ duration: 1.5, delay: 0.25, ease: 'easeOut' }}
+                style={{ background: 'radial-gradient(ellipse 55% 55% at 50% 50%, rgba(232,121,249,0.16), transparent 70%)' }}
+              />
+              <motion.div
+                className="absolute inset-0 p-4 sm:p-7"
+                initial={{ scale: 1.08 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true, margin: '-120px' }}
+                transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {Mock && <Mock />}
+              </motion.div>
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(232,121,249,0.12), transparent 70%)' }}
               />
               <div className="shine absolute inset-0 bg-white/[0.07] pointer-events-none" />
-            </button>
-          </SlideIn>
+            </motion.button>
+          </div>
 
           {/* Copy — slides in from the opposite side */}
           <SlideIn
