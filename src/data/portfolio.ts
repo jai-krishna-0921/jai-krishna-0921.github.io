@@ -82,6 +82,9 @@ export const PROJECTS = [
     size: 'large',
     icon: 'Radar',
     github: 'https://github.com/jai-krishna-0921/Corvax',
+    link: 'https://corvax-web-uqt4zs6iua-el.a.run.app/',
+    linkLabel: 'live product',
+    shot: '/img/shot-corvax.jpg',
     featured: true,
   },
   {
@@ -94,6 +97,9 @@ export const PROJECTS = [
     size: 'medium',
     icon: 'PhoneCall',
     github: 'https://github.com/jai-krishna-0921/serviceworker',
+    link: 'https://serviceworker-console-457424549818.us-central1.run.app/',
+    linkLabel: 'live console',
+    shot: '/img/shot-serviceworker.jpg',
     featured: true,
   },
   {

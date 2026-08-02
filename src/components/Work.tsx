@@ -96,6 +96,7 @@ function StackCard({
   const y = useTransform(progress, [start, held, end], [0, 0, -60])
 
   const Mock = MOCKUPS[KEY[project.id]]
+  const shot = 'shot' in project ? (project.shot as string) : null
   const flip = index % 2 === 1
 
   return (
@@ -128,13 +129,33 @@ function StackCard({
                 style={{ background: 'radial-gradient(ellipse 55% 55% at 50% 50%, rgba(232,121,249,0.16), transparent 70%)' }}
               />
               <motion.div
-                className="absolute inset-0 p-4 sm:p-7"
+                className="absolute inset-0"
                 initial={{ scale: 1.08 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true, margin: '-120px' }}
                 transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               >
-                {Mock && <Mock />}
+                {shot ? (
+                  <>
+                    <img
+                      src={shot}
+                      alt={`${project.title} — live product screenshot`}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover object-top"
+                    />
+                    {/* Settle a bright product UI into the dark page */}
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{ background: 'linear-gradient(to top, rgba(8,8,10,0.55) 0%, rgba(8,8,10,0.05) 45%, transparent 70%)' }}
+                    />
+                    <span className="absolute bottom-3 left-3 trace-pill !bg-black/60 backdrop-blur-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-verified" />
+                      live
+                    </span>
+                  </>
+                ) : (
+                  <div className="absolute inset-0 p-4 sm:p-7">{Mock && <Mock />}</div>
+                )}
               </motion.div>
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -195,7 +216,8 @@ function StackCard({
                 >
                   <ExternalLink size={12} />
                   <span className="border-b border-transparent group-hover:border-verified/40 pb-0.5">
-                    {(project.link as string).includes('npmjs') ? 'npm' : 'live demo'}
+                    {'linkLabel' in project ? (project.linkLabel as string)
+                      : (project.link as string).includes('npmjs') ? 'npm' : 'live demo'}
                   </span>
                 </a>
               )}
@@ -209,6 +231,7 @@ function StackCard({
 
 function Detail({ project, onClose }: { project: (typeof PROJECTS)[0]; onClose: () => void }) {
   const Mock = MOCKUPS[KEY[project.id]]
+  const shot = 'shot' in project ? (project.shot as string) : null
   return (
     <>
       <motion.div
@@ -225,7 +248,13 @@ function Detail({ project, onClose }: { project: (typeof PROJECTS)[0]; onClose: 
           transition={{ type: 'spring', damping: 30, stiffness: 340 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="aspect-[16/9] p-5 sm:p-8 bg-[color:var(--ink-edge)]">{Mock && <Mock />}</div>
+          <div className="relative aspect-[16/9] bg-[color:var(--ink-edge)] overflow-hidden">
+            {shot ? (
+              <img src={shot} alt={`${project.title} — live product screenshot`} className="absolute inset-0 w-full h-full object-cover object-top" />
+            ) : (
+              <div className="absolute inset-0 p-5 sm:p-8">{Mock && <Mock />}</div>
+            )}
+          </div>
           <button
             onClick={onClose}
             className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center bg-black/50 text-[color:var(--text-2)] hover:text-white transition-colors"
