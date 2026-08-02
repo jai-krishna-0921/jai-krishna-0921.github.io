@@ -1,0 +1,202 @@
+import { useRef, useState } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react'
+import { PROJECTS } from '@/data/portfolio'
+import { MOCKUPS } from '@/components/mockups/Mockups'
+import { X, ExternalLink } from 'lucide-react'
+
+const KEY: Record<number, string> = {
+  1: 'corvax', 2: 'serviceworker', 3: 'coven', 4: 'synapse', 5: 'fmodetect', 6: 'nofrin',
+}
+
+/** GitHub mark — lucide's Github icon is deprecated, so draw it directly. */
+function SiGithub({ size = 13 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+    </svg>
+  )
+}
+
+export function Work() {
+  const [open, setOpen] = useState<(typeof PROJECTS)[0] | null>(null)
+
+  return (
+    <section id="work" className="relative py-28 md:py-36 px-6 md:px-10">
+      <div className="max-w-6xl mx-auto">
+        <header className="mb-16 md:mb-20">
+          <div className="trace-pill mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-agent" />
+            <span>selected work</span>
+          </div>
+          <h2 className="headline text-[clamp(2rem,5vw,3.75rem)] max-w-2xl">
+            Six systems, each one <span className="accent-word text-agent">shipped</span>.
+          </h2>
+        </header>
+
+        <div className="space-y-24 md:space-y-36">
+          {PROJECTS.map((p, i) => (
+            <WorkRow key={p.id} project={p} index={i} onOpen={() => setOpen(p)} />
+          ))}
+        </div>
+      </div>
+
+      <AnimatePresence>{open && <Detail project={open} onClose={() => setOpen(null)} />}</AnimatePresence>
+    </section>
+  )
+}
+
+function WorkRow({
+  project, index, onOpen,
+}: { project: (typeof PROJECTS)[0]; index: number; onOpen: () => void }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const y = useTransform(scrollYProgress, [0, 1], [40, -40])
+  const Mock = MOCKUPS[KEY[project.id]]
+  const flip = index % 2 === 1
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center"
+    >
+      {/* Media */}
+      <motion.button
+        onClick={onOpen}
+        style={{ y }}
+        className={`media group relative col-span-1 lg:col-span-7 aspect-[16/10] cursor-pointer border border-[color:var(--hairline)] ${flip ? 'lg:order-2' : ''}`}
+      >
+        <div className="absolute inset-0 p-4 sm:p-7">{Mock && <Mock />}</div>
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{ background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(232,121,249,0.10), transparent 70%)' }}
+        />
+      </motion.button>
+
+      {/* Copy */}
+      <div className={`col-span-1 lg:col-span-5 ${flip ? 'lg:order-1' : ''}`}>
+        <div className="mono text-[11px] text-[color:var(--text-3)] mb-4 flex items-center gap-2.5">
+          <span className="text-agent">◈</span>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <span className="w-6 h-px bg-[color:var(--hairline)]" />
+          <span>{project.year}</span>
+        </div>
+
+        <h3 className="headline text-[clamp(1.6rem,3vw,2.4rem)] mb-3">{project.title}</h3>
+        <p className="mono text-[12px] text-agent/80 mb-5">{project.tagline}</p>
+        <p className="text-[15px] leading-relaxed text-[color:var(--text-2)] mb-7 line-clamp-4">
+          {project.description}
+        </p>
+
+        <div className="flex flex-wrap gap-2 mb-7">
+          {project.tech.slice(0, 5).map((t) => (
+            <span key={t} className="mono text-[11px] px-2.5 py-1 rounded-full border border-[color:var(--hairline)] text-[color:var(--text-3)]">
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <button onClick={onOpen} className="group mono text-[12px] text-[color:var(--text)] inline-flex items-center gap-2">
+            <span className="border-b border-agent/40 group-hover:border-agent transition-colors pb-0.5">read the case</span>
+            <span className="text-agent transition-transform group-hover:translate-x-1">→</span>
+          </button>
+
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="group mono text-[12px] text-[color:var(--text-2)] hover:text-[color:var(--text)] inline-flex items-center gap-1.5 transition-colors"
+          >
+            <SiGithub />
+            <span className="border-b border-transparent group-hover:border-white/25 pb-0.5">source</span>
+          </a>
+
+          {'link' in project && project.link && (
+            <a
+              href={project.link as string}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="group mono text-[12px] text-verified/90 hover:text-verified inline-flex items-center gap-1.5 transition-colors"
+            >
+              <ExternalLink size={12} />
+              <span className="border-b border-transparent group-hover:border-verified/40 pb-0.5">
+                {(project.link as string).includes('npmjs') ? 'npm' : 'live demo'}
+              </span>
+            </a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+function Detail({ project, onClose }: { project: (typeof PROJECTS)[0]; onClose: () => void }) {
+  const Mock = MOCKUPS[KEY[project.id]]
+  return (
+    <>
+      <motion.div
+        className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm"
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }} onClick={onClose}
+      />
+      <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-8 pointer-events-none overflow-y-auto">
+        <motion.div
+          className="card relative w-full max-w-3xl pointer-events-auto my-auto overflow-hidden"
+          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 12, scale: 0.98 }}
+          transition={{ type: 'spring', damping: 30, stiffness: 340 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="aspect-[16/9] p-5 sm:p-8 bg-[color:var(--ink-edge)]">{Mock && <Mock />}</div>
+
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center bg-black/50 text-[color:var(--text-2)] hover:text-white transition-colors"
+          >
+            <X size={15} />
+          </button>
+
+          <div className="p-6 sm:p-9">
+            <div className="mono text-[11px] text-[color:var(--text-3)] mb-3">{project.year}</div>
+            <h2 className="headline text-3xl mb-2">{project.title}</h2>
+            <p className="mono text-[12px] text-agent/80 mb-6">{project.tagline}</p>
+            <p className="text-[15px] leading-relaxed text-[color:var(--text-2)] mb-8">{project.description}</p>
+
+            <div className="mono text-[11px] text-[color:var(--text-3)] mb-3">STACK</div>
+            <div className="flex flex-wrap gap-2 mb-8">
+              {project.tech.map((t) => (
+                <span key={t} className="mono text-[11px] px-2.5 py-1 rounded-full border border-[color:var(--hairline)] text-[color:var(--text-2)]">
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={project.github} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium bg-[color:var(--text)] text-ink hover:scale-[1.02] transition-transform"
+              >
+                <SiGithub size={14} /> Source
+              </a>
+              {'link' in project && project.link && (
+                <a
+                  href={project.link as string} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium border border-[color:var(--hairline)] text-[color:var(--text-2)] hover:text-white transition-colors"
+                >
+                  <ExternalLink size={14} /> Live
+                </a>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </>
+  )
+}

@@ -1,218 +1,120 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 import gsap from 'gsap'
-import { Particles } from '@/components/ui/particles'
 import { PERSONAL } from '@/data/portfolio'
-import { Github, Linkedin, Mail, ChevronDown, ArrowRight, Download } from 'lucide-react'
+import { ArrowDown } from 'lucide-react'
 
-const ROLES = [
-  'multi-agent AI systems',
-  'intelligent LLM pipelines',
-  'production ML models',
-  'full-stack AI products',
-  'agentic automation workflows',
+/** Rows of a live agent trace — the page's signature vocabulary. */
+const TRACE = [
+  { agent: 'conductor', task: 'route the brief', mark: '✓' },
+  { agent: 'builder', task: 'ship the system', mark: '✓' },
+  { agent: 'reviewer', task: 'prove it holds', mark: '✓' },
 ]
 
 export function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const bgRef = useRef<HTMLDivElement>(null)
-  const [roleIndex, setRoleIndex] = useState(0)
-  const [displayed, setDisplayed] = useState('')
-  const [isDeleting, setIsDeleting] = useState(false)
-
+  const root = useRef<HTMLDivElement>(null)
   const { scrollY } = useScroll()
-  // Parallax: background moves at 50% speed, text at ~30%
-  const bgY = useTransform(scrollY, [0, 600], [0, 300])
-  const textY = useTransform(scrollY, [0, 600], [0, 180])
-  const opacity = useTransform(scrollY, [0, 400], [1, 0])
+  const y = useTransform(scrollY, [0, 700], [0, 140])
+  const fade = useTransform(scrollY, [0, 480], [1, 0])
 
-  // GSAP stagger entrance animation
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
-      tl.from('.hero-badge', { y: 20, opacity: 0, duration: 0.6, delay: 0.2 })
-        .from('.hero-name span', { y: 60, opacity: 0, duration: 0.8, stagger: 0.08 }, '-=0.3')
-        .from('.hero-sub', { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
-        .from('.hero-ctas', { y: 20, opacity: 0, duration: 0.5 }, '-=0.3')
-        .from('.hero-socials', { y: 15, opacity: 0, duration: 0.4 }, '-=0.3')
-        .from('.hero-scroll', { y: 10, opacity: 0, duration: 0.4 }, '-=0.2')
-    }, heroRef)
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      tl.from('.h-badge', { y: 14, opacity: 0, duration: 0.5, delay: 0.15 })
+        .from('.h-line', { y: 44, opacity: 0, duration: 0.85, stagger: 0.09 }, '-=0.2')
+        .from('.h-sub', { y: 16, opacity: 0, duration: 0.6 }, '-=0.45')
+        .from('.h-trace-row', { x: -14, opacity: 0, duration: 0.5, stagger: 0.11 }, '-=0.3')
+        .from('.h-cta', { y: 14, opacity: 0, duration: 0.5 }, '-=0.35')
+    }, root)
     return () => ctx.revert()
   }, [])
 
-  // Typewriter effect
-  useEffect(() => {
-    const current = ROLES[roleIndex]
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (displayed.length < current.length) {
-          setDisplayed(current.slice(0, displayed.length + 1))
-        } else {
-          setTimeout(() => setIsDeleting(true), 1800)
-        }
-      } else {
-        if (displayed.length > 0) {
-          setDisplayed(current.slice(0, displayed.length - 1))
-        } else {
-          setIsDeleting(false)
-          setRoleIndex((i) => (i + 1) % ROLES.length)
-        }
-      }
-    }, isDeleting ? 45 : 80)
-    return () => clearTimeout(timeout)
-  }, [displayed, isDeleting, roleIndex])
-
-  const words = PERSONAL.name.split(' ')
-
   return (
-    <section
-      ref={heroRef}
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Animated background gradient */}
-      <motion.div
-        ref={bgRef}
-        style={{ y: bgY }}
-        className="absolute inset-0 pointer-events-none"
-      >
-        {/* Deep radial glow */}
+    <section ref={root} id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Atmospheric hero image — drops in when generated; the gradient
+          well below stands in until then so the layout never breaks. */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img
+          src="/img/hero-atmos.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute right-0 top-0 h-full w-[55%] object-cover opacity-0 transition-opacity duration-1000"
+          onLoad={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = '0.55' }}
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+        />
         <div
           className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(99,102,241,0.12) 0%, rgba(34,211,238,0.05) 40%, transparent 70%)',
-          }}
+          style={{ background: 'radial-gradient(ellipse 46% 52% at 72% 44%, rgba(232,121,249,0.13) 0%, transparent 68%)' }}
         />
-        {/* Grid overlay */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(99,102,241,1) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,1) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
+          className="absolute inset-y-0 left-0 w-2/3"
+          style={{ background: 'linear-gradient(to right, #08080a 42%, transparent)' }}
         />
-      </motion.div>
+      </div>
 
-      {/* Particles */}
-      <Particles
-        className="absolute inset-0"
-        quantity={120}
-        color="#34d399"
-        staticity={30}
-        ease={60}
-        size={0.6}
-      />
-      {/* Second particle layer (cyan) */}
-      <Particles
-        className="absolute inset-0"
-        quantity={50}
-        color="#fbbf24"
-        staticity={80}
-        ease={40}
-        size={0.4}
-        vx={0.03}
-        vy={-0.03}
-      />
-
-      {/* Content */}
-      <motion.div
-        style={{ y: textY, opacity }}
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto"
-      >
-        {/* Badge */}
-        <div className="hero-badge inline-flex items-center gap-2 mb-8">
-          <span className="section-label">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#fbbf24] animate-pulse" />
-            Available for opportunities
-          </span>
+      <motion.div style={{ y, opacity: fade }} className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-10 pt-24">
+        <div className="h-badge trace-pill mb-9">
+          <span className="w-1.5 h-1.5 rounded-full bg-verified animate-pulse-soft" />
+          <span className="text-sweep">available for AI engineering roles</span>
         </div>
 
-        {/* Name */}
-        <h1 className="hero-name text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight leading-none mb-6 overflow-hidden font-display">
-          {words.map((word, wi) => (
-            <span key={wi} className="inline-block overflow-hidden mr-4">
-              <span className="inline-block animate-gradient-text">{word}</span>
-            </span>
-          ))}
+        {/* Mixed-face headline — Satoshi with Instrument Serif italic
+            accent words. This is the reference's core typographic move. */}
+        <h1 className="headline text-[clamp(2.6rem,7.4vw,6.5rem)] max-w-4xl mb-8">
+          <span className="h-line block">I build systems that</span>
+          <span className="h-line block">
+            <span className="accent-word text-agent">reason</span>, then{' '}
+            <span className="accent-word">prove</span>
+          </span>
+          <span className="h-line block">they were right.</span>
         </h1>
 
-        {/* Typewriter role */}
-        <div className="hero-sub flex items-center justify-center gap-3 mb-4">
-          <span className="text-xl sm:text-2xl text-white/40 font-light">I build</span>
-          <span className="text-xl sm:text-2xl font-semibold text-white min-w-[260px] text-left">
-            {displayed}
-            <span className="inline-block w-0.5 h-6 bg-[#34d399] ml-0.5 animate-pulse" />
-          </span>
-        </div>
-
-        {/* Subtitle */}
-        <p className="hero-sub text-white/50 text-base sm:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-          {PERSONAL.subtitle} - from multi-agent LLM pipelines to production cloud deployments.
+        <p className="h-sub text-[15px] sm:text-base text-[color:var(--text-2)] max-w-lg leading-relaxed mb-10">
+          {PERSONAL.name.split(' ')[0]} — AI engineer in {PERSONAL.location.split(',')[0]}. Multi-agent
+          orchestration, durable AI platforms, and the guardrails that keep them
+          honest in production.
         </p>
 
-        {/* CTAs */}
-        <div className="hero-ctas flex flex-wrap items-center justify-center gap-4 mb-10">
-          <motion.a
-            href="#projects"
-            onClick={(e) => {
-              e.preventDefault()
-              document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })
-            }}
-            className="group flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-500 shadow-[0_0_30px_rgba(52,211,153,0.35)] hover:shadow-[0_0_40px_rgba(52,211,153,0.5)] transition-all duration-300"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            View My Work
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </motion.a>
-          <motion.a
-            href={`mailto:${PERSONAL.email}`}
-            className="flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white/80 border border-white/15 bg-white/5 hover:bg-white/10 hover:border-white/30 hover:text-white transition-all duration-300"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <Mail size={16} />
-            Get in Touch
-          </motion.a>
-        </div>
-
-        {/* Social links */}
-        <div className="hero-socials flex items-center justify-center gap-4">
-          {[
-            { icon: Github, label: 'GitHub', href: PERSONAL.github },
-            { icon: Linkedin, label: 'LinkedIn', href: PERSONAL.linkedin },
-            { icon: Mail, label: 'Email', href: `mailto:${PERSONAL.email}` },
-          ].map(({ icon: Icon, label, href }) => (
-            <motion.a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/5 text-white/50 hover:text-white hover:bg-white/10 hover:border-white/25 transition-all duration-200"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              title={label}
-            >
-              <Icon size={17} />
-            </motion.a>
+        {/* The trace — three rows that read like coven's own output */}
+        <div className="mb-11 space-y-2">
+          {TRACE.map((r) => (
+            <div key={r.agent} className="h-trace-row mono text-[12px] sm:text-[13px] flex items-center gap-3">
+              <span className="text-verified">{r.mark}</span>
+              <span className="text-agent">◈ {r.agent}</span>
+              <span className="text-[color:var(--text-3)]">⟩ {r.task}</span>
+            </div>
           ))}
+          <div className="h-trace-row mono text-[12px] sm:text-[13px] flex items-center gap-3 pt-1">
+            <span className="text-[color:var(--text-3)]">❯</span>
+            <span className="w-2 h-4 bg-agent caret inline-block" />
+          </div>
+        </div>
+
+        <div className="h-cta flex flex-wrap items-center gap-4">
+          <a
+            href="#work"
+            onClick={(e) => { e.preventDefault(); document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' }) }}
+            className="group relative overflow-hidden rounded-full px-7 py-3.5 text-sm font-medium text-ink bg-[color:var(--text)] transition-transform hover:scale-[1.02]"
+          >
+            <span className="relative z-10">See the work</span>
+            <span className="shine absolute inset-0 bg-white/40" />
+          </a>
+          <a
+            href={`mailto:${PERSONAL.email}`}
+            className="rounded-full px-7 py-3.5 text-sm font-medium border border-[color:var(--hairline)] text-[color:var(--text-2)] hover:text-[color:var(--text)] hover:border-white/25 transition-colors"
+          >
+            Get in touch
+          </a>
         </div>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
-        className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ opacity: fade }}
+        className="absolute bottom-9 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-xs text-white/25 tracking-widest uppercase">Scroll</span>
-        <ChevronDown size={16} className="text-white/25" />
+        <span className="mono text-[10px] tracking-[0.22em] text-[color:var(--text-3)] uppercase">scroll</span>
+        <ArrowDown size={13} className="text-[color:var(--text-3)]" />
       </motion.div>
-
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#030303] to-transparent pointer-events-none" />
     </section>
   )
 }
