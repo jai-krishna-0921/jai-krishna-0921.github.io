@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bloom" cx="52%" cy="40%" r="58%">
+      <stop offset="0%"   stop-color="#e879f9" stop-opacity="0.34"/>
+      <stop offset="38%"  stop-color="#a855c7" stop-opacity="0.15"/>
+      <stop offset="72%"  stop-color="#38bdf8" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#08080a" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="core" cx="52%" cy="40%" r="17%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="45%"  stop-color="#e879f9" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#e879f9" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="fadeEdge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#08080a" stop-opacity="1"/>
+      <stop offset="38%"  stop-color="#08080a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#08080a" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="fadeV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#08080a" stop-opacity="0.85"/>
+      <stop offset="30%"  stop-color="#08080a" stop-opacity="0"/>
+      <stop offset="76%"  stop-color="#08080a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#08080a" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <filter id="soften" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="1200" fill="#08080a"/>
+  <rect width="900" height="1200" fill="url(#bloom)"/>
+
+  <!-- Lattice: filaments converging on a lit core -->
+  <g stroke="#e879f9" fill="none" opacity="0.30" filter="url(#soften)">
+    <path d="M468 480 L268 250"  stroke-width="1.6"/>
+    <path d="M468 480 L700 262"  stroke-width="1.3"/>
+    <path d="M468 480 L214 546"  stroke-width="1.5"/>
+    <path d="M468 480 L742 520"  stroke-width="1.2"/>
+    <path d="M468 480 L300 786"  stroke-width="1.4"/>
+    <path d="M468 480 L664 812"  stroke-width="1.1"/>
+    <path d="M468 480 L470 190"  stroke-width="1.0"/>
+    <path d="M468 480 L486 900"  stroke-width="1.2"/>
+  </g>
+
+  <g stroke="#38bdf8" fill="none" opacity="0.16">
+    <path d="M268 250 L214 546" stroke-width="0.9"/>
+    <path d="M700 262 L742 520" stroke-width="0.9"/>
+    <path d="M214 546 L300 786" stroke-width="0.9"/>
+    <path d="M742 520 L664 812" stroke-width="0.9"/>
+    <path d="M268 250 L470 190" stroke-width="0.8"/>
+    <path d="M470 190 L700 262" stroke-width="0.8"/>
+    <path d="M300 786 L486 900" stroke-width="0.8"/>
+    <path d="M486 900 L664 812" stroke-width="0.8"/>
+  </g>
+
+  <!-- Outer nodes -->
+  <g fill="#e879f9">
+    <circle cx="268" cy="250" r="7"  opacity="0.75"/>
+    <circle cx="700" cy="262" r="5.5" opacity="0.6"/>
+    <circle cx="214" cy="546" r="6"  opacity="0.7"/>
+    <circle cx="742" cy="520" r="5"  opacity="0.55"/>
+    <circle cx="300" cy="786" r="6.5" opacity="0.65"/>
+    <circle cx="664" cy="812" r="4.5" opacity="0.5"/>
+    <circle cx="470" cy="190" r="4"  opacity="0.45"/>
+    <circle cx="486" cy="900" r="5"  opacity="0.5"/>
+  </g>
+
+  <!-- Halos -->
+  <g fill="#e879f9" opacity="0.14" filter="url(#soften)">
+    <circle cx="268" cy="250" r="26"/>
+    <circle cx="214" cy="546" r="24"/>
+    <circle cx="300" cy="786" r="25"/>
+    <circle cx="700" cy="262" r="20"/>
+  </g>
+
+  <!-- Lit core -->
+  <circle cx="468" cy="480" r="200" fill="url(#core)"/>
+  <circle cx="468" cy="480" r="13" fill="#ffffff" opacity="0.9"/>
+  <circle cx="468" cy="480" r="26" fill="#e879f9" opacity="0.28" filter="url(#soften)"/>
+
+  <!-- Volumetric haze bands -->
+  <g opacity="0.08" filter="url(#soften)">
+    <ellipse cx="450" cy="640" rx="420" ry="42" fill="#38bdf8"/>
+    <ellipse cx="470" cy="360" rx="360" ry="30" fill="#e879f9"/>
+  </g>
+
+  <rect width="900" height="1200" fill="url(#fadeV)"/>
+  <rect width="900" height="1200" fill="url(#fadeEdge)"/>
+  <rect width="900" height="1200" filter="url(#grain)" opacity="0.035"/>
+</svg>

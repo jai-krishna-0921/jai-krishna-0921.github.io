@@ -31,24 +31,20 @@ export function Hero() {
 
   return (
     <section ref={root} id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Atmospheric hero image — drops in when generated; the gradient
-          well below stands in until then so the layout never breaks. */}
+      {/* Atmospheric backdrop. Swap hero-atmos.svg for a photoreal
+          render at the same path to upgrade it — nothing else changes. */}
       <div className="absolute inset-0 pointer-events-none">
         <img
-          src="/img/hero-atmos.png"
+          src="/img/hero-atmos.svg"
           alt=""
           aria-hidden="true"
-          className="absolute right-0 top-0 h-full w-[55%] object-cover opacity-0 transition-opacity duration-1000"
-          onLoad={(e) => { (e.currentTarget as HTMLImageElement).style.opacity = '0.55' }}
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+          className="absolute right-0 top-0 h-full w-[62%] object-cover opacity-0 transition-opacity duration-[1200ms]"
+          onLoad={(e) => { e.currentTarget.style.opacity = '0.9' }}
+          onError={(e) => { e.currentTarget.style.display = 'none' }}
         />
         <div
-          className="absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse 46% 52% at 72% 44%, rgba(232,121,249,0.13) 0%, transparent 68%)' }}
-        />
-        <div
-          className="absolute inset-y-0 left-0 w-2/3"
-          style={{ background: 'linear-gradient(to right, #08080a 42%, transparent)' }}
+          className="absolute inset-y-0 left-0 w-3/5"
+          style={{ background: 'linear-gradient(to right, #08080a 46%, transparent)' }}
         />
       </div>
 
