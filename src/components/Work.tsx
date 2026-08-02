@@ -19,7 +19,7 @@ function SiGithub({ size = 13 }: { size?: number }) {
 
 /**
  * Stacked-card scroll deck. Each card pins to the viewport, then scales
- * down and fades as the next one rides up over it — the mechanic measured
+ * down and fades as the next one rides up over it - the mechanic measured
  * on the reference (scale 1 → 0.6, opacity 1 → 0, progressive depth floors).
  */
 export function Work() {
@@ -41,7 +41,7 @@ export function Work() {
         </SlideIn>
       </div>
 
-      {/* The deck — sticky siblings sharing one scroll timeline, so each
+      {/* The deck - sticky siblings sharing one scroll timeline, so each
           card physically stacks over the last instead of leaving a gap. */}
       <Deck onOpen={setOpen} />
 
@@ -108,7 +108,7 @@ function StackCard({
           style={{ scale, opacity, filter, y }}
           className="relative max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center origin-center"
         >
-          {/* Media — wipes open from the centre and blooms as the card settles */}
+          {/* Media - wipes open from the centre and blooms as the card settles */}
           <div className={`col-span-1 lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>
             <motion.button
               onClick={onOpen}
@@ -139,7 +139,7 @@ function StackCard({
                   <>
                     <img
                       src={shot}
-                      alt={`${project.title} — live product screenshot`}
+                      alt={`${project.title} live product screenshot`}
                       loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover object-top"
                     />
@@ -165,7 +165,7 @@ function StackCard({
             </motion.button>
           </div>
 
-          {/* Copy — slides in from the opposite side */}
+          {/* Copy - slides in from the opposite side */}
           <SlideIn
             from={flip ? 'left' : 'right'}
             distance={60}
@@ -250,7 +250,7 @@ function Detail({ project, onClose }: { project: (typeof PROJECTS)[0]; onClose: 
         >
           <div className="relative aspect-[16/9] bg-[color:var(--ink-edge)] overflow-hidden">
             {shot ? (
-              <img src={shot} alt={`${project.title} — live product screenshot`} className="absolute inset-0 w-full h-full object-cover object-top" />
+              <img src={shot} alt={`${project.title} live product screenshot`} className="absolute inset-0 w-full h-full object-cover object-top" />
             ) : (
               <div className="absolute inset-0 p-5 sm:p-8">{Mock && <Mock />}</div>
             )}

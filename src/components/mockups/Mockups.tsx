@@ -1,5 +1,5 @@
 /**
- * Product mockups drawn as vectors — one per project, each depicting
+ * Product mockups drawn as vectors - one per project, each depicting
  * what that system actually shows its user. Sharp at any size, no
  * network cost, and accurate in a way stock imagery never is.
  */
@@ -27,7 +27,7 @@ function Frame({ children, label }: { children: React.ReactNode; label: string }
   )
 }
 
-/** Corvax — the outbound pipeline dashboard: crawl → validate → draft → send → track */
+/** Corvax - the outbound pipeline dashboard: crawl → validate → draft → send → track */
 export function CorvaxMockup() {
   const stages = [
     { n: 'crawl', x: 30, done: true },
@@ -73,7 +73,7 @@ export function CorvaxMockup() {
   )
 }
 
-/** ServiceWorker — the booking console: a job row, its state machine, a verified slot */
+/** ServiceWorker - the booking console: a job row, its state machine, a verified slot */
 export function ServiceWorkerMockup() {
   return (
     <Frame label="serviceworker · console">
@@ -96,7 +96,7 @@ export function ServiceWorkerMockup() {
         </g>
       ))}
 
-      {/* slot card — read back and verified */}
+      {/* slot card - read back and verified */}
       <rect x="30" y="208" width="290" height="154" rx="14" fill={EDGE} />
       <text x="48" y="234" fontSize="10" fill={DIM} fontFamily="JetBrains Mono, monospace">CONFIRMED SLOT</text>
       <text x="48" y="264" fontSize="20" fill="#e9e9ec" fontFamily="Satoshi, sans-serif" fontWeight="500">Thu · 2:30 PM</text>
@@ -117,7 +117,7 @@ export function ServiceWorkerMockup() {
   )
 }
 
-/** Synapse-Dx — the knowledge graph fused with vector hits */
+/** Synapse-Dx - the knowledge graph fused with vector hits */
 export function SynapseMockup() {
   const nodes = [
     { x: 320, y: 190, r: 13, c: AGENT, l: '' },
@@ -151,7 +151,7 @@ export function SynapseMockup() {
   )
 }
 
-/** Nofrin — the critic scoring five dimensions, revision loop */
+/** Nofrin - the critic scoring five dimensions, revision loop */
 export function NofrinMockup() {
   const dims = [
     { k: 'factuality', w: 0.3, s: 4.6 },
@@ -182,7 +182,7 @@ export function NofrinMockup() {
   )
 }
 
-/** FMODetect — input frame, trajectory overlay, extracted TDF */
+/** FMODetect - input frame, trajectory overlay, extracted TDF */
 export function FMOMockup() {
   return (
     <Frame label="fmodetect-v2 · inference">
@@ -228,7 +228,7 @@ export function FMOMockup() {
   )
 }
 
-/** Coven — the terminal session, redrawn from the repo's own demo.svg */
+/** Coven - the terminal session, redrawn from the repo's own demo.svg */
 export function CovenMockup() {
   const rows = [
     { ind: 0, agent: 'researcher', task: 'scout existing utils' },

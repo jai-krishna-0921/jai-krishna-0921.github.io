@@ -66,7 +66,7 @@ export function StaggerIn({
   )
 }
 
-/** Scroll-scrubbed blur-to-focus — the reference's blur(4.9px) → blur(0). */
+/** Scroll-scrubbed blur-to-focus - the reference's blur(4.9px) → blur(0). */
 export function BlurFocus({ children, className }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.95', 'start 0.4'] })

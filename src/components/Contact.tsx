@@ -12,7 +12,7 @@ export function Contact() {
   return (
     <section id="contact" className="relative pt-28 md:pt-36 px-6 md:px-10 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Recognition — quiet, factual */}
+        {/* Recognition - quiet, factual */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-28 md:mb-36">
           {ACHIEVEMENTS.map((a, i) => (
             <motion.div
@@ -48,7 +48,7 @@ export function Contact() {
 
             <p className="text-[15px] text-[color:var(--text-2)] max-w-md mx-auto mb-11 leading-relaxed">
               I'm looking for AI engineering work where the systems have to hold up
-              under real load — and someone has to prove they do.
+              under real load, and someone has to prove they do.
             </p>
 
             <a

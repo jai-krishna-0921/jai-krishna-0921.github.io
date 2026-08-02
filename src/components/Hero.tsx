@@ -4,7 +4,7 @@ import gsap from 'gsap'
 import { PERSONAL } from '@/data/portfolio'
 import { ArrowDown } from 'lucide-react'
 
-/** Rows of a live agent trace — the page's signature vocabulary. */
+/** Rows of a live agent trace - the page's signature vocabulary. */
 const TRACE = [
   { agent: 'conductor', task: 'route the brief', mark: '✓' },
   { agent: 'builder', task: 'ship the system', mark: '✓' },
@@ -32,7 +32,7 @@ export function Hero() {
   return (
     <section ref={root} id="hero" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Atmospheric backdrop. Swap hero-atmos.svg for a photoreal
-          render at the same path to upgrade it — nothing else changes. */}
+          render at the same path to upgrade it - nothing else changes. */}
       <div className="absolute inset-0 pointer-events-none">
         <img
           src="/img/hero-atmos.svg"
@@ -54,7 +54,7 @@ export function Hero() {
           <span className="text-sweep">available for AI engineering roles</span>
         </div>
 
-        {/* Mixed-face headline — Satoshi with Instrument Serif italic
+        {/* Mixed-face headline - Satoshi with Instrument Serif italic
             accent words. This is the reference's core typographic move. */}
         <h1 className="headline text-[clamp(2.6rem,7.4vw,6.5rem)] max-w-4xl mb-8">
           <span className="h-line block">I build systems that</span>
@@ -66,12 +66,12 @@ export function Hero() {
         </h1>
 
         <p className="h-sub text-[15px] sm:text-base text-[color:var(--text-2)] max-w-lg leading-relaxed mb-10">
-          {PERSONAL.name.split(' ')[0]} — AI engineer in {PERSONAL.location.split(',')[0]}. Multi-agent
+          {PERSONAL.name.split(' ')[0]}, AI engineer in {PERSONAL.location.split(',')[0]}. Multi-agent
           orchestration, durable AI platforms, and the guardrails that keep them
           honest in production.
         </p>
 
-        {/* The trace — three rows that read like coven's own output */}
+        {/* The trace - three rows that read like coven's own output */}
         <div className="mb-11 space-y-2">
           {TRACE.map((r) => (
             <div key={r.agent} className="h-trace-row mono text-[12px] sm:text-[13px] flex items-center gap-3">

@@ -46,7 +46,7 @@ export function Capabilities() {
           ))}
         </div>
 
-        {/* Toolkit — dense, quiet, scannable */}
+        {/* Toolkit - dense, quiet, scannable */}
         <div className="border-t border-[color:var(--hairline)] pt-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-9">
             {SKILLS.map((cat, i) => (

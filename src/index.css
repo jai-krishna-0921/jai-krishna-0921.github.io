@@ -4,7 +4,7 @@
 
 /* ══════════════════════════════════════════════════════════
    Palette derived from coven's own terminal output
-   (assets/demo.svg) — agent fuchsia, verified green,
+   (assets/demo.svg) - agent fuchsia, verified green,
    command cyan, permission amber. Status colors carry
    meaning; they are never decoration.
    ══════════════════════════════════════════════════════════ */
@@ -13,11 +13,11 @@
   --ink-raised: #0d0e12;   /* cards */
   --ink-edge:   #16171d;   /* card borders / wells */
 
-  --agent:      #e879f9;   /* fuchsia — agents, primary accent */
+  --agent:      #e879f9;   /* fuchsia - agents, primary accent */
   --agent-dim:  #a855c7;
-  --verified:   #4ade80;   /* green — passed / shipped */
-  --command:    #38bdf8;   /* cyan — commands, links */
-  --pending:    #fbbf24;   /* amber — permission / in-flight */
+  --verified:   #4ade80;   /* green - passed / shipped */
+  --command:    #38bdf8;   /* cyan - commands, links */
+  --pending:    #fbbf24;   /* amber - permission / in-flight */
 
   --text:       #e9e9ec;
   --text-2:     rgba(233, 233, 236, 0.62);
@@ -65,7 +65,7 @@ body {
 .mono { font-family: 'JetBrains Mono', monospace; }
 
 /* ══════════════════════════════════════════════════════════
-   SHINE — the reference's exact mechanic: a mask band swept
+   SHINE - the reference's exact mechanic: a mask band swept
    across the element, not a gradient position shift.
    ══════════════════════════════════════════════════════════ */
 @keyframes shine {
@@ -81,7 +81,7 @@ body {
   animation: shine 5s ease-in-out infinite;
 }
 
-/* Metallic text — vertical light gradient clipped to glyphs */
+/* Metallic text - vertical light gradient clipped to glyphs */
 .metallic {
   background: linear-gradient(0deg, #8b8d99 18%, #ffffff 46%);
   -webkit-background-clip: text;
@@ -106,7 +106,7 @@ body {
   animation: sweep-x 6s ease-in-out infinite;
 }
 
-/* ── Status pill — the trace vocabulary ─────────────────── */
+/* ── Status pill - the trace vocabulary ─────────────────── */
 .trace-pill {
   display: inline-flex;
   align-items: center;
@@ -128,7 +128,7 @@ body {
   border-radius: 20px;
 }
 
-/* ── Media frame — large radius, like both references ──── */
+/* ── Media frame - large radius, like both references ──── */
 .media {
   border-radius: 24px;
   overflow: hidden;
