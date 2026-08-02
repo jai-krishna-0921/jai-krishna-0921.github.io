@@ -5,6 +5,7 @@ import { PERSONAL } from '@/data/portfolio'
 
 const LINKS = [
   { label: 'Work', href: '#work' },
+  { label: 'Impact', href: '#impact' },
   { label: 'Trace', href: '#trace' },
   { label: 'Capabilities', href: '#capabilities' },
   { label: 'Contact', href: '#contact' },

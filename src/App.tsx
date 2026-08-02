@@ -3,6 +3,7 @@ import { Navbar } from '@/components/Navbar'
 import { Hero } from '@/components/Hero'
 import { LogoTicker } from '@/components/LogoTicker'
 import { Work } from '@/components/Work'
+import { Impact } from '@/components/Impact'
 import { Trace } from '@/components/Trace'
 import { Capabilities } from '@/components/Capabilities'
 import { Contact } from '@/components/Contact'
@@ -27,6 +28,7 @@ export default function App() {
         <Hero />
         <LogoTicker />
         <Work />
+        <Impact />
         <Trace />
         <Capabilities />
         <Contact />

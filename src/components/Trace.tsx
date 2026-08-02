@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
-import { EXPERIENCE, STATS } from '@/data/portfolio'
+import { EXPERIENCE } from '@/data/portfolio'
+import { SlideIn, BlurFocus } from '@/components/motion/Reveal'
 
 /**
  * Career as an execution trace: each role is a completed step,
@@ -16,37 +17,18 @@ export function Trace() {
     <section id="trace" className="relative py-28 md:py-36 px-6 md:px-10">
       <div className="max-w-5xl mx-auto">
         <header className="mb-16 md:mb-20">
-          <div className="trace-pill mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-verified" />
-            <span>the trace</span>
-          </div>
-          <h2 className="headline text-[clamp(2rem,5vw,3.75rem)] max-w-2xl">
-            Four roles, each one <span className="accent-word text-agent">measured</span>.
-          </h2>
+          <SlideIn from="left">
+            <div className="trace-pill mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-verified" />
+              <span>the trace</span>
+            </div>
+          </SlideIn>
+          <SlideIn from="left" delay={0.1}>
+            <h2 className="headline text-[clamp(2rem,5vw,3.75rem)] max-w-2xl">
+              Four roles, each one <span className="accent-word text-agent">measured</span>.
+            </h2>
+          </SlideIn>
         </header>
-
-        {/* Metrics — verified results */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-20 md:mb-28">
-          {STATS.map((s, i) => (
-            <motion.div
-              key={s.label}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.07, duration: 0.5 }}
-              className="card p-5 sm:p-6"
-            >
-              <div className="mono text-[10px] text-verified mb-3 flex items-center gap-1.5">
-                <span>✓</span><span>verified</span>
-              </div>
-              <div className="headline text-[clamp(1.8rem,3.6vw,2.75rem)] mb-1.5">
-                {s.value}<span className="text-agent">{s.suffix}</span>
-              </div>
-              <div className="text-[13px] text-[color:var(--text-2)] mb-1">{s.label}</div>
-              <div className="text-[11px] leading-snug text-[color:var(--text-3)]">{s.description}</div>
-            </motion.div>
-          ))}
-        </div>
 
         {/* Timeline rail */}
         <div ref={ref} className="relative pl-8 sm:pl-12">
@@ -58,14 +40,7 @@ export function Trace() {
 
           <div className="space-y-14 sm:space-y-16">
             {EXPERIENCE.map((exp, i) => (
-              <motion.div
-                key={exp.id}
-                initial={{ opacity: 0, x: -12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.55, delay: 0.05 }}
-                className="relative"
-              >
+              <BlurFocus key={exp.id} className="relative">
                 <span className="absolute -left-8 sm:-left-12 top-1.5 w-[9px] h-[9px] rounded-full bg-agent ring-4 ring-ink" />
 
                 <div className="mono text-[11px] text-[color:var(--text-3)] mb-2.5 flex flex-wrap items-center gap-2.5">
@@ -93,7 +68,7 @@ export function Trace() {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </BlurFocus>
             ))}
           </div>
         </div>
