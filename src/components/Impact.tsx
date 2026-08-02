@@ -12,23 +12,48 @@ import { SlideIn } from '@/components/motion/Reveal'
 export function Impact() {
   const ref = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
-  const [span, setSpan] = useState(0)
+  const [step, setStep] = useState(0)
   const [active, setActive] = useState(0)
+  const n = STATS.length
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
 
+  // One card's advance = its width + the flex gap. Travelling (n-1) steps
+  // lands the LAST card exactly where the first began, so every card takes
+  // the featured slot in turn instead of the tail drifting off-screen.
   useLayoutEffect(() => {
     const measure = () => {
-      if (!trackRef.current) return
-      setSpan(Math.max(0, trackRef.current.scrollWidth - window.innerWidth * 0.55))
+      const track = trackRef.current
+      if (!track) return
+      const cards = track.children
+      if (cards.length < 2) return
+      const a = cards[0].getBoundingClientRect()
+      const b = cards[1].getBoundingClientRect()
+      setStep(Math.round(b.left - a.left))
     }
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
   }, [])
 
-  const x = useTransform(scrollYProgress, [0.05, 0.95], [0, -span])
-  const smoothX = useSpring(x, { stiffness: 120, damping: 30, mass: 0.5 })
+  // Stepped timeline: each card holds in the featured slot, then advances.
+  const { inputs, outputs } = (() => {
+    const inp: number[] = []
+    const out: number[] = []
+    const HOLD = 0.55
+    for (let i = 0; i < n; i++) {
+      const segStart = i / n
+      const segEnd = (i + 1) / n
+      inp.push(segStart, segStart + (segEnd - segStart) * HOLD)
+      out.push(-i * step, -i * step)
+    }
+    inp.push(1)
+    out.push(-(n - 1) * step)
+    return { inputs: inp, outputs: out }
+  })()
+
+  const x = useTransform(scrollYProgress, inputs, outputs)
+  const smoothX = useSpring(x, { stiffness: 130, damping: 32, mass: 0.5 })
 
   const velocity = useVelocity(scrollYProgress)
   const smoothV = useSpring(velocity, { damping: 45, stiffness: 320 })
@@ -37,11 +62,12 @@ export function Impact() {
   const skew = useTransform(smoothV, [-3, 0, 3], [-2.5, 0, 2.5], { clamp: true })
 
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    setActive(Math.min(STATS.length - 1, Math.max(0, Math.floor(v * STATS.length))))
+    setActive(Math.min(n - 1, Math.max(0, Math.floor(v * n))))
   })
 
+  // One screenful of dwell per card, plus a lead-in.
   return (
-    <section ref={ref} id="impact" className="relative" style={{ height: '260vh' }}>
+    <section ref={ref} id="impact" className="relative" style={{ height: `${n * 90 + 100}vh` }}>
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 md:px-10 w-full mb-12">
           <SlideIn from="left">
